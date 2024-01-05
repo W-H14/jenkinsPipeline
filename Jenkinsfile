@@ -17,14 +17,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script{
-                    sh 'docker build -t kelvinskell/python-http-server .'
+                    sh 'docker build -t wyhall/python-http-server .'
             }
         }
     }
         stage('Containerize And Test') {
             steps {
                 script{
-                    sh 'docker run -d --name python-app kelvinskell/python-http-server && sleep 10 && docker stop python-app'
+                    sh 'docker run -d --name python-app wyhall/python-http-server && sleep 10 && docker stop python-app'
                 }
             }
         }
@@ -32,8 +32,8 @@ pipeline {
             steps {
                 script{
                     withCredentials([string(credentialsId: 'DockerHubPass', variable: 'DockerHubpass')]) {
-                    sh 'docker login -u kelvinskell --password ${DockerHubpass}' }
-                    sh 'docker push kelvinskell/python-http-server'
+                    sh 'docker login -u wyhall --password ${DockerHubpass}' }
+                    sh 'docker push wyhall/python-http-server'
                 }
             }
         }    
